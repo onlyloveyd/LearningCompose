@@ -53,15 +53,20 @@ fun Home(navController: NavController) {
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         items(router) {
-            Text(
-                text = it.first,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 12.dp)
-                    .clickable {
-                        navController.navigate(it.second)
-                    }
-            )
+
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    navController.navigate(it.second)
+                }) {
+                Text(
+                    text = it.first,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp, vertical = 12.dp)
+                )
+            }
+
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
