@@ -3,24 +3,25 @@ package tech.kicky.compose
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.*
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.style.TextDirection
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.style.*
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -219,6 +220,155 @@ fun TextSample(navController: NavController) {
                 )
             )
         }
+
+        // 可选择文本
+        stickyHeader {
+            SectionTitle(title = "Selection Container")
+        }
+        item {
+            SelectionContainer(modifier = Modifier.fillMaxWidth()) {
+                Text(text = "You can select me, baby")
+            }
+        }
+
+        // 可点击文本
+        stickyHeader {
+            SectionTitle(title = "Clickable Text")
+        }
+        item {
+            Text(text = "使用 clickable 实现点击", modifier = Modifier.clickable {
+                AppLog("使用 Text clickable 属性完成点击")
+            })
+        }
+        item {
+            ClickableText(
+                text = AnnotatedString(
+                    text = "Hello World",
+                    // make "Hello" italic.
+                    spanStyles = listOf(
+                        AnnotatedString.Range(SpanStyle(fontStyle = FontStyle.Italic), 0, 5)
+                    ),
+                    // create two paragraphs with different alignment and indent settings.
+                    paragraphStyles = listOf(
+                        AnnotatedString.Range(ParagraphStyle(textAlign = TextAlign.Center), 0, 6),
+                        AnnotatedString.Range(ParagraphStyle(textIndent = TextIndent(5.sp)), 6, 11)
+                    )
+                ), onClick = {
+                    AppLog("ClickableText 完成点击")
+                }
+            )
+        }
+
+        // AnnotatedString 嵌套样式
+        stickyHeader {
+            SectionTitle(title = "AnnotatedString")
+        }
+        item {
+            Text(text = with(AnnotatedString.Builder("Hello")) {
+                // push green text style so that any appended text will be green
+                pushStyle(SpanStyle(color = Color.Green))
+                // append new text, this text will be rendered as green
+                append(" World")
+                // pop the green style
+                pop()
+                // append a string without style
+                append("!")
+                // then style the last added word as red, exclamation mark will be red
+                addStyle(SpanStyle(color = Color.Red), "Hello World".length, this.length)
+
+                toAnnotatedString()
+            })
+        }
+        item {
+            Text(text = with(AnnotatedString.Builder()) {
+                // push green text color so that any appended text will be rendered green
+                pushStyle(SpanStyle(color = Color.Green))
+                // append string, this text will be rendered green
+                append("Hello")
+                // pop the green text style
+                pop()
+                // append new string, this string will be default color
+                append(" World")
+
+                toAnnotatedString()
+            })
+        }
+        item {
+            Text(text = with(AnnotatedString.Builder()) {
+                // push a ParagraphStyle to be applied to any appended text after this point.
+                pushStyle(ParagraphStyle(lineHeight = 18.sp))
+                // append a paragraph which will have lineHeight 18.sp
+                append("Paragraph One\n")
+                // pop the ParagraphStyle
+                pop()
+                // append new paragraph, this paragraph will not have the line height defined.
+                append("Paragraph Two\n")
+
+                toAnnotatedString()
+            })
+        }
+        item {
+            Text(text = with(AnnotatedString.Builder()) {
+                // push a string annotation to be applied to any appended text after this point.
+                pushStringAnnotation("ParagrapLabel", "paragraph1")
+                // append a paragraph, the annotation "paragraph1" is attached
+                append("Paragraph One\n")
+                // pop the annotation
+                pop()
+                // append new paragraph
+                append("Paragraph Two\n")
+
+                toAnnotatedString()
+            })
+        }
+        item {
+            Text(text = with(AnnotatedString.Builder()) {
+                withStyle(SpanStyle(color = Color.Green)) {
+                    // green text style will be applied to all text in this block
+                    append("Hello")
+                }
+                toAnnotatedString()
+            })
+        }
+        item {
+            Text(text = buildAnnotatedString {
+                // append "Hello" with red text color
+                withStyle(SpanStyle(color = Color.Red)) {
+                    append("Hello")
+                }
+                append(" ")
+                // append "Hello" with blue text color
+                withStyle(SpanStyle(color = Color.Blue)) {
+                    append("World!")
+                }
+            })
+        }
+
+        item {
+            val annotatedString = with(AnnotatedString.Builder()) {
+                append("link: Jetpack Compose")
+                // attach a string annotation that stores a URL to the text "Jetpack Compose".
+                addStringAnnotation(
+                    tag = "URL",
+                    annotation = "https://developer.android.google.cn/jetpack/compose",
+                    start = 6,
+                    end = 21
+                )
+                toAnnotatedString()
+            }
+            ClickableText(
+                modifier = Modifier.padding(vertical = 10.dp),
+                text = annotatedString,
+                onClick = {
+                    val annotations = annotatedString.getStringAnnotations(start = 6, end = 21)
+                    for (annotation in annotations) {
+                        AppLog(annotation.item)
+                        AppLog(annotation.tag)
+                    }
+                })
+        }
+
+
     }
 }
 
