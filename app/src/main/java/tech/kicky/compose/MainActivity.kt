@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import tech.kicky.compose.graphics.GraphicsSample
 import tech.kicky.compose.ui.theme.LearningComposeTheme
 import tech.kicky.compose.ui.theme.Purple200
 import kotlin.time.Duration.Companion.seconds
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
                     composable("textSample") { TextSample(navController) }
                     composable("buttonSample") { ButtonSample(navController) }
                     composable("listSample") { ListSample(navController) }
+                    composable("graphicsSample") { GraphicsSample() }
                 }
             }
         }
@@ -48,6 +50,7 @@ fun Home(navController: NavController) {
         "Text" to "textSample",
         "Button" to "buttonSample",
         "List" to "ListSample",
+        "Graphics" to "GraphicsSample",
     )
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(4.dp)
