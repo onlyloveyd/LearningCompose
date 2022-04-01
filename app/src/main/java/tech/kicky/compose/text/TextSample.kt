@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import tech.kicky.compose.extension.AppLog
+import tech.kicky.compose.text.*
 import tech.kicky.compose.ui.theme.Purple200
 import tech.kicky.compose.ui.theme.Purple500
 import tech.kicky.compose.ui.theme.Purple700
@@ -80,8 +81,13 @@ fun TextSample(navController: NavController) {
             FontFamily.SansSerif,
             FontFamily.Serif
         )
-        items(5) {
-            Text(text = "这无止息地吹刮着的激怒的风，", fontFamily = fontFamilyList[it])
+        item {
+            FontFamilySansSerifSample()
+            FontFamilySerifSample()
+            FontFamilyMonospaceSample()
+            FontFamilyCursiveSample()
+            CustomFontFamilySample()
+            FontFamilySynthesisSample()
         }
 
         // letterSpacing
@@ -96,14 +102,10 @@ fun TextSample(navController: NavController) {
         stickyHeader {
             SectionTitle(title = "textDecoration")
         }
-        val textDecorations = listOf(
-            TextDecoration.None,
-            TextDecoration.Underline,
-            TextDecoration.LineThrough,
-            TextDecoration.Underline + TextDecoration.LineThrough
-        )
-        items(3) {
-            Text(text = "——然后我死了，", textDecoration = textDecorations[it])
+        item {
+            TextDecorationLineThroughSample()
+            TextDecorationUnderlineSample()
+            TextDecorationCombinedSample()
         }
 
         // TextAlign
@@ -141,18 +143,11 @@ fun TextSample(navController: NavController) {
         stickyHeader {
             SectionTitle(title = "overflow")
         }
-        val textOverflows = listOf(
-            TextOverflow.Clip,
-            TextOverflow.Ellipsis,
-            TextOverflow.Visible
-        )
-        items(3) {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = "上帝,请赐予我平静, 去接受我无法改变的. 给予我勇气, 去改变我能改变的, 赐我智慧, 分辨这两者的区别.",
-                overflow = textOverflows[it],
-                maxLines = 1
-            )
+        item {
+            TextOverflowClipSample()
+            TextOverflowEllipsisSample()
+            TextOverflowVisibleFixedSizeSample()
+            TextOverflowVisibleMinHeightSample()
         }
 
         // SoftWrap
@@ -180,26 +175,12 @@ fun TextSample(navController: NavController) {
                 }
             )
         }
-        // Text Style TextDirection
+        // Text Style
         stickyHeader {
-            SectionTitle("textStyle: textDirection")
+            SectionTitle("textStyle")
         }
-        val directions = listOf(
-            TextDirection.Ltr,
-            TextDirection.Rtl,
-            TextDirection.Content,
-            TextDirection.ContentOrLtr,
-            TextDirection.ContentOrRtl
-        )
-        items(5) {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = "Learning Jetpack Compose",
-                style = TextStyle(
-                    color = Color.Cyan,
-                    textDirection = directions[it],
-                )
-            )
+        item {
+            TextStyleSample()
         }
 
         // Text Style Shadow
@@ -219,6 +200,23 @@ fun TextSample(navController: NavController) {
                     )
                 )
             )
+        }
+
+        // Span Style
+        stickyHeader {
+            SectionTitle(title = "SpanStyle")
+        }
+        item {
+            SpanStyleSample()
+        }
+
+        // ParagraphStyle
+        stickyHeader {
+            SectionTitle(title = "ParagraphStyle")
+        }
+        item {
+            ParagraphStyleSample()
+            ParagraphStyleAnnotatedStringsSample()
         }
 
         // 可选择文本
@@ -278,8 +276,7 @@ fun TextSample(navController: NavController) {
 
                 toAnnotatedString()
             })
-        }
-        item {
+
             Text(text = with(AnnotatedString.Builder()) {
                 // push green text color so that any appended text will be rendered green
                 pushStyle(SpanStyle(color = Color.Green))
@@ -292,8 +289,7 @@ fun TextSample(navController: NavController) {
 
                 toAnnotatedString()
             })
-        }
-        item {
+
             Text(text = with(AnnotatedString.Builder()) {
                 // push a ParagraphStyle to be applied to any appended text after this point.
                 pushStyle(ParagraphStyle(lineHeight = 18.sp))
@@ -306,8 +302,7 @@ fun TextSample(navController: NavController) {
 
                 toAnnotatedString()
             })
-        }
-        item {
+
             Text(text = with(AnnotatedString.Builder()) {
                 // push a string annotation to be applied to any appended text after this point.
                 pushStringAnnotation("ParagrapLabel", "paragraph1")
@@ -320,8 +315,7 @@ fun TextSample(navController: NavController) {
 
                 toAnnotatedString()
             })
-        }
-        item {
+
             Text(text = with(AnnotatedString.Builder()) {
                 withStyle(SpanStyle(color = Color.Green)) {
                     // green text style will be applied to all text in this block
@@ -329,8 +323,7 @@ fun TextSample(navController: NavController) {
                 }
                 toAnnotatedString()
             })
-        }
-        item {
+
             Text(text = buildAnnotatedString {
                 // append "Hello" with red text color
                 withStyle(SpanStyle(color = Color.Red)) {
@@ -342,9 +335,7 @@ fun TextSample(navController: NavController) {
                     append("World!")
                 }
             })
-        }
 
-        item {
             val annotatedString = with(AnnotatedString.Builder()) {
                 append("link: Jetpack Compose")
                 // attach a string annotation that stores a URL to the text "Jetpack Compose".
