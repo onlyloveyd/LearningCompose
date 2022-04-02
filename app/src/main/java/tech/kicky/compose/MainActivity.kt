@@ -16,8 +16,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import tech.kicky.compose.graphics.GraphicsSample
-import tech.kicky.compose.textfield.TextFieldSampleList
+import tech.kicky.compose.graphics.GraphicsSamples
+import tech.kicky.compose.textfield.TextFieldSamples
 import tech.kicky.compose.ui.theme.LearningComposeTheme
 import tech.kicky.compose.ui.theme.Purple200
 
@@ -29,9 +29,9 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = "home") {
                     composable("home") { Home(navController) }
-                    composable("textSample") { TextSample() }
-                    composable("textFiledSample") { TextFieldSampleList() }
-                    composable("graphicsSample") { GraphicsSample() }
+                    composable("textSample") { TextSamples() }
+                    composable("textFiledSample") { TextFieldSamples() }
+                    composable("graphicsSample") { GraphicsSamples() }
                 }
             }
         }

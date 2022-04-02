@@ -7,7 +7,7 @@ import tech.kicky.compose.SectionTitle
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GraphicsSample() {
+fun GraphicsSamples() {
     LazyColumn {
         stickyHeader {
             SectionTitle(title = "BrushSample")

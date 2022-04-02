@@ -9,7 +9,7 @@ import tech.kicky.compose.SectionTitle
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TextFieldSampleList() {
+fun TextFieldSamples() {
     LazyColumn {
         stickyHeader {
             SectionTitle(title = "TextField")

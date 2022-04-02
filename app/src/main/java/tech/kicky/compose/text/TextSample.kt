@@ -33,7 +33,7 @@ import tech.kicky.compose.ui.theme.Purple700
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TextSample() {
+fun TextSamples() {
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         // Font Size
         stickyHeader {
