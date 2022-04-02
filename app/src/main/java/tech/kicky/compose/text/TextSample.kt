@@ -164,14 +164,14 @@ fun TextSample(navController: NavController) {
 
         // onTextLayout
         stickyHeader {
-            SectionTitle("softWrap")
+            SectionTitle("onTextLayout")
         }
         item {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = "上帝, 请赐予我平静, 去接受我无法改变的. 给予我勇气, 去改变我能改变的, 赐我智慧, 分辨这两者的区别.",
                 onTextLayout = {
-                    AppLog("size: ${it.size}")
+                    AppLog("onTextLayout => size: ${it.size}")
                 }
             )
         }
@@ -358,8 +358,6 @@ fun TextSample(navController: NavController) {
                     }
                 })
         }
-
-
     }
 }
 

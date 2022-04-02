@@ -35,8 +35,6 @@ class MainActivity : ComponentActivity() {
                 NavHost(navController = navController, startDestination = "home") {
                     composable("home") { Home(navController) }
                     composable("textSample") { TextSample(navController) }
-                    composable("buttonSample") { ButtonSample(navController) }
-                    composable("listSample") { ListSample(navController) }
                     composable("graphicsSample") { GraphicsSample() }
                 }
             }
@@ -48,8 +46,6 @@ class MainActivity : ComponentActivity() {
 fun Home(navController: NavController) {
     val router = listOf(
         "Text" to "textSample",
-        "Button" to "buttonSample",
-        "List" to "ListSample",
         "Graphics" to "GraphicsSample",
     )
     LazyColumn(
