@@ -3,7 +3,7 @@ package tech.kicky.compose.graphics
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import tech.kicky.compose.SectionTitle
+import tech.kicky.compose.text.SectionTitle
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

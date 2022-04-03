@@ -1,11 +1,9 @@
-package tech.kicky.compose
+package tech.kicky.compose.text
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,15 +16,13 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.*
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.*
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import tech.kicky.compose.extension.AppLog
-import tech.kicky.compose.text.*
+import tech.kicky.compose.extension.appLog
 import tech.kicky.compose.ui.theme.Purple200
 import tech.kicky.compose.ui.theme.Purple500
 import tech.kicky.compose.ui.theme.Purple700
@@ -35,13 +31,6 @@ import tech.kicky.compose.ui.theme.Purple700
 @Composable
 fun TextSamples() {
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
-        // Font Size
-        stickyHeader {
-            SectionTitle(title = "fontSize")
-        }
-        items(3) {
-            Text(text = "假如我是一只鸟，", fontSize = (8 * it).sp)
-        }
 
         // Color
         stickyHeader {
@@ -49,7 +38,15 @@ fun TextSamples() {
         }
         val colors = listOf(Purple200, Purple500, Purple700)
         items(3) {
-            Text(text = "我也应该用嘶哑的喉咙歌唱，", color = colors[it])
+            Text(text = "假如我是一只鸟，", color = colors[it])
+        }
+
+        // Font Size
+        stickyHeader {
+            SectionTitle(title = "fontSize")
+        }
+        items(3) {
+            Text(text = "我也应该用嘶哑的喉咙歌唱，", fontSize = (12 * (it + 1)).sp)
         }
 
         // Font Style
@@ -73,14 +70,6 @@ fun TextSamples() {
         stickyHeader {
             SectionTitle(title = "fontFamily")
         }
-
-        val fontFamilyList = listOf(
-            FontFamily.Default,
-            FontFamily.Monospace,
-            FontFamily.Cursive,
-            FontFamily.SansSerif,
-            FontFamily.Serif
-        )
         item {
             FontFamilySansSerifSample()
             FontFamilySerifSample()
@@ -135,8 +124,8 @@ fun TextSamples() {
         items(4) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = "为什么我的眼里常含泪水？因为我对这土地爱得深沉……，",
-                lineHeight = (10 * (it + 1)).sp
+                text = "上帝, 请赐予我平静, 去接受我无法改变的. 给予我勇气, 去改变我能改变的, 赐我智慧, 分辨这两者的区别.",
+                lineHeight = (20 * (it + 1)).sp
             )
         }
         // Text Overflow
@@ -162,6 +151,18 @@ fun TextSamples() {
             )
         }
 
+        stickyHeader {
+            SectionTitle(title = "maxLines")
+        }
+        item {
+            Text(
+                text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
+                        "incididunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam, quis " +
+                        "nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                maxLines = 2
+            )
+        }
+
         // onTextLayout
         stickyHeader {
             SectionTitle("onTextLayout")
@@ -171,7 +172,7 @@ fun TextSamples() {
                 modifier = Modifier.fillMaxWidth(),
                 text = "上帝, 请赐予我平静, 去接受我无法改变的. 给予我勇气, 去改变我能改变的, 赐我智慧, 分辨这两者的区别.",
                 onTextLayout = {
-                    AppLog("onTextLayout => size: ${it.size}")
+                    appLog("onTextLayout => size: ${it.size}")
                 }
             )
         }
@@ -234,9 +235,10 @@ fun TextSamples() {
             SectionTitle(title = "Clickable Text")
         }
         item {
-            Text(text = "使用 clickable 实现点击", modifier = Modifier.clickable {
-                AppLog("使用 Text clickable 属性完成点击")
-            })
+            Text(text = "使用 clickable 实现点击",
+                modifier = Modifier.clickable {
+                    appLog("使用 Text clickable 属性完成点击")
+                })
         }
         item {
             ClickableText(
@@ -252,7 +254,7 @@ fun TextSamples() {
                         AnnotatedString.Range(ParagraphStyle(textIndent = TextIndent(5.sp)), 6, 11)
                     )
                 ), onClick = {
-                    AppLog("ClickableText 完成点击")
+                    appLog("ClickableText 完成点击, 位置 $it")
                 }
             )
         }
@@ -305,7 +307,7 @@ fun TextSamples() {
 
             Text(text = with(AnnotatedString.Builder()) {
                 // push a string annotation to be applied to any appended text after this point.
-                pushStringAnnotation("ParagrapLabel", "paragraph1")
+                pushStringAnnotation("ParagraphLabel", "paragraph1")
                 // append a paragraph, the annotation "paragraph1" is attached
                 append("Paragraph One\n")
                 // pop the annotation
@@ -353,10 +355,18 @@ fun TextSamples() {
                 onClick = {
                     val annotations = annotatedString.getStringAnnotations(start = 6, end = 21)
                     for (annotation in annotations) {
-                        AppLog(annotation.item)
-                        AppLog(annotation.tag)
+                        appLog(annotation.item)
+                        appLog(annotation.tag)
                     }
                 })
+        }
+
+        // inlineTextContent
+        stickyHeader {
+            SectionTitle(title = "inlineTextContent")
+        }
+        item {
+            InlineTextContentSample()
         }
     }
 }

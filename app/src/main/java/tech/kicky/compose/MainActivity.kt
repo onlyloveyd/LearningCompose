@@ -17,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import tech.kicky.compose.graphics.GraphicsSamples
+import tech.kicky.compose.text.TextSamples
 import tech.kicky.compose.textfield.TextFieldSamples
 import tech.kicky.compose.ui.theme.LearningComposeTheme
 import tech.kicky.compose.ui.theme.Purple200

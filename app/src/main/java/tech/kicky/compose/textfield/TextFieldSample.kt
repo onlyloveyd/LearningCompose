@@ -2,9 +2,8 @@ package tech.kicky.compose.textfield
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
-import tech.kicky.compose.SectionTitle
+import tech.kicky.compose.text.SectionTitle
 
 
 @OptIn(ExperimentalFoundationApi::class)
