@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                 NavHost(navController = navController, startDestination = "home") {
                     composable("home") { Home(navController) }
                     composable("textSample") { TextSamples() }
-                    composable("textFiledSample") { TextFieldSamples() }
+                    composable("textFieldSample") { TextFieldSamples() }
                     composable("graphicsSample") { GraphicsSamples() }
                 }
             }
