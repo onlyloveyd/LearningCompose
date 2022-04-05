@@ -1,22 +1,11 @@
 package tech.kicky.compose.textfield
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Info
@@ -25,29 +14,21 @@ import androidx.compose.material.icons.materialPath
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.semantics.error
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun SimpleTextFieldSample() {
     var text by rememberSaveable { mutableStateOf("") }
-
     TextField(
         value = text,
         onValueChange = { text = it },
@@ -158,7 +139,7 @@ fun PasswordTextField() {
         trailingIcon = {
             IconButton(onClick = { passwordHidden = !passwordHidden }) {
                 val visibilityIcon =
-                    if (passwordHidden) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                    if (passwordHidden) Visibility else VisibilityOff
                 // Please provide localized description for accessibility services
                 val description = if (passwordHidden) "Show password" else "Hide password"
                 Icon(imageVector = visibilityIcon, contentDescription = description)
@@ -171,7 +152,7 @@ fun PasswordTextField() {
  * password text field sample but to avoid adding material-icons-extended library as a dependency
  * to the samples not to increase the build time
  */
-private val Icons.Filled.Visibility: ImageVector
+private val Visibility: ImageVector
     get() {
         if (_visibility != null) {
             return _visibility!!
@@ -202,7 +183,7 @@ private val Icons.Filled.Visibility: ImageVector
     }
 private var _visibility: ImageVector? = null
 
-private val Icons.Filled.VisibilityOff: ImageVector
+private val VisibilityOff: ImageVector
     get() {
         if (_visibilityOff != null) {
             return _visibilityOff!!
@@ -315,119 +296,3 @@ fun TextArea() {
         label = { Text("Label") }
     )
 }
-
-
-//@Composable
-//fun CustomTextFieldBasedOnDecorationBox() {
-//    @OptIn(ExperimentalMaterialApi::class)
-//    @Composable
-//    fun CustomTextField(
-//        value: String,
-//        onValueChange: (String) -> Unit,
-//        modifier: Modifier = Modifier
-//    ) {
-//        val interactionSource = remember { MutableInteractionSource() }
-//        // parameters below will be passed to BasicTextField for correct behavior of the text field,
-//        // and to the decoration box for proper styling and sizing
-//        val enabled = true
-//        val singleLine = true
-//        val passwordTransformation = PasswordVisualTransformation()
-//
-//        val colors = TextFieldDefaults.textFieldColors()
-//        BasicTextField(
-//            value = value,
-//            onValueChange = onValueChange,
-//            modifier = modifier
-//                .background(
-//                    color = colors.backgroundColor(enabled).value,
-//                    shape = TextFieldDefaults.TextFieldShape
-//                ).indicatorLine(
-//                    enabled = enabled,
-//                    isError = false,
-//                    interactionSource = interactionSource,
-//                    colors = colors
-//                ),
-//            visualTransformation = passwordTransformation,
-//            // internal implementation of the BasicTextField will dispatch focus events
-//            interactionSource = interactionSource,
-//            enabled = enabled,
-//            singleLine = singleLine,
-//        ) {
-//            TextFieldDefaults.TextFieldDecorationBox(
-//                value = value,
-//                visualTransformation = passwordTransformation,
-//                innerTextField = it,
-//                singleLine = singleLine,
-//                enabled = enabled,
-//                // same interaction source as the one passed to BasicTextField to read focus state
-//                // for text field styling
-//                interactionSource = interactionSource,
-//                // keep vertical paddings but change the horizontal
-//                contentPadding = TextFieldDefaults.textFieldWithoutLabelPadding(
-//                    start = 8.dp, end = 8.dp
-//                )
-//            )
-//        }
-//    }
-//}
-
-
-//@Composable
-//fun CustomOutlinedTextFieldBasedOnDecorationBox() {
-//    @OptIn(ExperimentalMaterialApi::class)
-//    @Composable
-//    fun CustomTextField(
-//        value: String,
-//        onValueChange: (String) -> Unit,
-//        modifier: Modifier = Modifier
-//    ) {
-//        val interactionSource = remember { MutableInteractionSource() }
-//        // parameters below will be passed to BasicTextField for correct behavior of the text field,
-//        // and to the decoration box for proper styling and sizing
-//        val enabled = true
-//        val singleLine = true
-//
-//        val colors = TextFieldDefaults.outlinedTextFieldColors(
-//            unfocusedBorderColor = Color.LightGray,
-//            focusedBorderColor = Color.DarkGray
-//        )
-//        BasicTextField(
-//            value = value,
-//            onValueChange = onValueChange,
-//            modifier = modifier,
-//            // internal implementation of the BasicTextField will dispatch focus events
-//            interactionSource = interactionSource,
-//            enabled = enabled,
-//            singleLine = singleLine
-//        ) {
-//            TextFieldDefaults.OutlinedTextFieldDecorationBox(
-//                value = value,
-//                visualTransformation = VisualTransformation.None,
-//                innerTextField = it,
-//                singleLine = singleLine,
-//                enabled = enabled,
-//                // same interaction source as the one passed to BasicTextField to read focus state
-//                // for text field styling
-//                interactionSource = interactionSource,
-//                // keep vertical paddings but change the horizontal
-//                contentPadding = TextFieldDefaults.textFieldWithoutLabelPadding(
-//                    start = 8.dp, end = 8.dp
-//                ),
-//                // update border thickness and shape
-//                border = {
-//                    TextFieldDefaults.BorderStroke(
-//                        enabled = enabled,
-//                        isError = false,
-//                        colors = colors,
-//                        interactionSource = interactionSource,
-//                        shape = RectangleShape,
-//                        unfocusedBorderThickness = 2.dp,
-//                        focusedBorderThickness = 4.dp
-//                    )
-//                },
-//                // update border colors
-//                colors = colors
-//            )
-//        }
-//    }
-//}
